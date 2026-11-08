@@ -1,36 +1,21 @@
-from typing import List
-
+from collections import Counter
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+
+        #So my appoach is going to be Counter to get a hashmap and then compare it with counter of all the next values until we reach the end, we can use while as a condition. We need to maintain two counters and a result List and also create a 
         
-        def anagrams(n: str, t: str) -> bool:
-            if len(n) != len(t):
-                return False
+        groups = defaultdict(list)
+        for s in strs:
+            key = tuple(sorted(s))
+            groups[key].append(s)
+        return list(groups.values())
+
+
+
+                
+             
+
+
+
             
-            arr = list(n)
-            for ch in t:
-                if ch in arr:
-                    arr.remove(ch)
-                else:
-                    return False   # IMPORTANT
-
-            return len(arr) == 0
-
-        arr2 = []
-        visited = set()  # indices already grouped
-
-        for i, n in enumerate(strs):
-            if i in visited:
-                continue
-
-            arr1 = [n]
-            visited.add(i)
-
-            for j in range(i + 1, len(strs)):
-                if j not in visited and anagrams(n, strs[j]):
-                    arr1.append(strs[j])
-                    visited.add(j)
-
-            arr2.append(arr1)
-
-        return arr2
+            
