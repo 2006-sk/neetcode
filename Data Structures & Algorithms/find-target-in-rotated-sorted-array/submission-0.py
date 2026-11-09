@@ -1,25 +1,25 @@
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
-        l = 0
-        r = len(nums) -1
-        ans = -1
-        while l <= r:
-            mid = (l + r) // 2
+        #If bigger than hi and lo and smaller than mid then between mid and lo, if bigger then between mid and hi, vice versa for smaller and also check hi lo in starting, it will kind od get to there. condition will be for index number
+
+        lo, hi = 0, len(nums) - 1
+
+        while lo <= hi:
+            mid = (lo + hi) // 2
+
             if nums[mid] == target:
                 return mid
-    
-    # Using your logic: check if mid is in the "large" left half
-            if nums[mid] > nums[r]: 
-        # Target is even bigger than mid OR target is in the small right half
-                if target > nums[mid] or target <= nums[r]:
-                    l = mid + 1
+
+            if nums[lo] <= nums[mid]:          # left half is sorted
+                if nums[lo] <= target < nums[mid]:
+                    hi = mid - 1               # target is in the sorted left half
                 else:
-                    r = mid - 1
-            else:
-        # mid is in the "small" right half
-        # Target is even smaller than mid OR target is in the large left half
-                if target < nums[mid] or target > nums[r]:
-                    r = mid - 1
+                    lo = mid + 1               # target must be in the right half
+            else:                              # right half is sorted
+                if nums[mid] < target <= nums[hi]:
+                    lo = mid + 1               # target is in the sorted right half
                 else:
-                    l = mid + 1
-        return ans
+                    hi = mid - 1               # target must be in the left half
+
+        return -1
+
