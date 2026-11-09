@@ -1,21 +1,24 @@
+import math
 class Solution:
     def minEatingSpeed(self, piles: List[int], h: int) -> int:
-        t = max(piles)
-        l = 1
-        newmin = t
-        def finalhours(k:int) -> int:
-            hrs =0
-            for i in range(len(piles)):
-                hrs += math.ceil(piles[i]/k)
-            return hrs
+        #I can define a fucntion that checks if Koko is able to complete the pile. 
+        def time(rate):
+            count = 0
+            for r in piles:
+                count += math.ceil(r/rate)
+            return count
 
-        while l <= t:
-            mid = (t+l)//2
-            val = finalhours(mid)
-            if val <= h:
-                newmin = min(mid, newmin)
-                t = mid -1
+        lo = 1
+        hi = max(piles)
+
+        while lo < hi:
+            mid = (hi+lo)//2
+
+            if time(mid) <= h:
+                hi = mid
             else:
-                l = mid + 1
-        return int(newmin)
-                
+                lo = mid + 1
+        
+
+        return lo
+
